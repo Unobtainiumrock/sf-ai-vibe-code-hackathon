@@ -1,10 +1,10 @@
-# 🚀 AHA Development Roadmap
+# 🚀 AHA Development Roadmap (Simplified)
 
 ## ✅ **COMPLETED: Environment Setup**
 - ✅ Project structure created
 - ✅ Backend dependencies installed (Poetry)
 - ✅ Frontend dependencies installed (npm)
-- ✅ Zypher Agent setup complete (Deno)
+- ✅ Zypher Agent setup complete (Deno) - **SIMPLIFIED (no Firecrawl)**
 - ✅ All prerequisite tools ready
 
 ## 🎯 **NEXT: Immediate Action Items**
@@ -16,12 +16,11 @@ Edit your `.env` file with real API keys:
 # Edit this file NOW:
 nano .env
 
-# You need these keys:
+# You need these keys (Firecrawl removed):
 LANGSMITH_API_KEY=ls_...     # Get from https://smith.langchain.com/
 OPENAI_API_KEY=sk-...        # Get from https://platform.openai.com/api-keys
 GITHUB_TOKEN=ghp_...         # Get from https://github.com/settings/tokens
-ANTHROPIC_API_KEY=sk-ant-... # Get from https://console.anthropic.com/
-FIRECRAWL_API_KEY=fc-...     # Get from https://firecrawl.dev/
+ANTHROPIC_API_KEY=sk-ant-... # Get from https://console.anthropic.com/ (for Zypher)
 ```
 
 ### **Step 2: Start Development Servers (5 minutes)**
@@ -38,9 +37,10 @@ FIRECRAWL_API_KEY=fc-...     # Get from https://firecrawl.dev/
 # Should start on http://localhost:3000
 ```
 
-**Terminal 3 - Test Zypher Target:**
+**Terminal 3 - Test Zypher Target (Optional):**
 ```bash
 cd target_system
+export ANTHROPIC_API_KEY=your_key_here
 deno task dev
 # Should run the multi-agent research team
 ```
@@ -65,7 +65,7 @@ python demo/inject_failure.py
 - Update dashboard
 - Refresh http://localhost:3000 to see incident
 
-## �� **Development Priorities**
+## 🛠 **Development Priorities**
 
 ### **Phase 1: Core Demo (Next 2-4 hours)**
 1. **Fix any startup issues**
@@ -74,12 +74,12 @@ python demo/inject_failure.py
    - Test webhook connectivity
 
 2. **Enhance the demo narrative**
-   - Improve failure scenarios
+   - Improve failure scenarios (JSON parsing errors)
    - Polish the dashboard UI
    - Add real-time updates
 
 3. **Test end-to-end flow**
-   - Zypher → LangSmith → AHA → GitHub → Dashboard
+   - Mock Zypher → LangSmith → AHA → GitHub → Dashboard
    - Ensure reliable demo experience
 
 ### **Phase 2: CoreSpeed Integration (Next 4-6 hours)**
@@ -127,7 +127,6 @@ python demo/inject_failure.py
 **Technical Demo:**
 - [ ] Backend starts without errors
 - [ ] Frontend displays dashboard
-- [ ] Zypher agents execute successfully
 - [ ] AHA detects and analyzes failures
 - [ ] GitHub issues created automatically
 - [ ] Dashboard updates in real-time
@@ -147,3 +146,12 @@ nano .env
 ```
 
 Then launch the servers and test the demo flow!
+
+## 📝 **Simplified Architecture Benefits**
+
+**Removed Firecrawl dependencies for:**
+- ✅ Faster setup and fewer API keys needed
+- ✅ More reliable demo (no external web crawling)
+- ✅ Clearer failure scenarios (JSON parsing errors)
+- ✅ Focused on core AHA intelligence
+- ✅ Better hackathon presentation reliability

@@ -22,13 +22,14 @@ class Settings(BaseSettings):
     github_repo_name: str = "aha-incidents"
     
     # AHA Configuration
-    webhook_port: int = 8000
-    frontend_port: int = 3000
-    debug_mode: bool = True
+    aha_webhook_port: int = 8000
+    aha_frontend_port: int = 3000
+    aha_debug_mode: bool = True
     
     class Config:
         env_file = ".env"
         case_sensitive = False
+        extra = "ignore"  # Ignore extra fields
 
     def validate_llm_config(self) -> bool:
         """Ensure at least one LLM provider is configured"""

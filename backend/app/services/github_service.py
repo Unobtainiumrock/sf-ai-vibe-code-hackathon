@@ -41,10 +41,20 @@ class GitHubService:
     """Service for GitHub API interactions"""
     
     def __init__(self):
-        self.github = Github(settings.github_token)
-        self.repo = self.github.get_repo(
-            f"{settings.github_repo_owner}/{settings.github_repo_name}"
-        )
+        self.github = None
+        self.repo = None
+        
+        try:
+            if settings.github_token and settings.github_token != "ghp_your_actual_token_here":
+                self.github = Github(settings.github_token)
+                self.repo = self.github.get_repo(
+                    f"{settings.github_repo_owner}/{settings.github_repo_name}"
+                )
+                logger.info("GitHub service initialized successfully")
+            else:
+                logger.warning("GitHub token not configured - issues will not be created")
+        except Exception as e:
+            logger.warning(f"GitHub service initialization failed: {e}")
     
     async def create_issue(
         self,
@@ -56,6 +66,10 @@ class GitHubService:
         """
         Create a GitHub issue for the incident
         """
+        if not self.repo:
+            logger.warning("GitHub repository not configured - skipping issue creation")
+            return None
+            
         try:
             logger.info(f"Creating GitHub issue for trace: {trace_id}")
             

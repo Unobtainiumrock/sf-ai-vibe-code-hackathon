@@ -1,6 +1,6 @@
 /**
  * Multi-Agent Research Team built with CoreSpeed's Zypher Agent
- * This serves as the "Target System" that AHA will monitor
+ * Simplified version without external dependencies for reliable demo
  */
 
 import { AnthropicModelProvider, ZypherAgent } from "@corespeed/zypher";
@@ -34,7 +34,7 @@ class ZypherResearchTeam {
   }
 
   async init() {
-    // Initialize all agents and register MCP servers for web crawling
+    // Initialize all agents (no external MCP servers needed)
     const agents = [
       this.plannerAgent,
       this.researcherAgent1, 
@@ -43,18 +43,6 @@ class ZypherResearchTeam {
     ];
 
     for (const agent of agents) {
-      await agent.mcpServerManager.registerServer({
-        id: "firecrawl",
-        type: "command",
-        command: {
-          command: "npx",
-          args: ["-y", "firecrawl-mcp"],
-          env: {
-            FIRECRAWL_API_KEY: getRequiredEnv("FIRECRAWL_API_KEY"),
-          },
-        },
-      });
-      
       await agent.init();
     }
   }
@@ -72,21 +60,20 @@ class ZypherResearchTeam {
       
       for await (const event of eachValueFrom(planEvent$)) {
         if (event.type === 'completion') {
-          // Parse the planning result to extract subtasks
           const planText = event.content;
           subtasks = this.extractSubtasks(planText);
           console.log(`📋 Planned subtasks: ${subtasks.join(', ')}`);
         }
       }
 
-      // Step 2: Research with ResearcherAgents
+      // Step 2: Research with ResearcherAgents (using built-in knowledge)
       const researchResults: string[] = [];
       
       // Researcher 1
       if (subtasks[0]) {
         console.log(`🔍 ResearcherAgent-1: Researching "${subtasks[0]}"...`);
         const research1Event$ = this.researcherAgent1.runTask(
-          `Research this topic thoroughly: ${subtasks[0]}`,
+          `Provide detailed research on this topic using your knowledge: ${subtasks[0]}`,
           "claude-sonnet-4-20250514"
         );
         
@@ -108,7 +95,7 @@ class ZypherResearchTeam {
       if (subtasks[1]) {
         console.log(`🔍 ResearcherAgent-2: Researching "${subtasks[1]}"...`);
         const research2Event$ = this.researcherAgent2.runTask(
-          `Research this topic thoroughly: ${subtasks[1]}`,
+          `Provide detailed research on this topic using your knowledge: ${subtasks[1]}`,
           "claude-sonnet-4-20250514"
         );
         

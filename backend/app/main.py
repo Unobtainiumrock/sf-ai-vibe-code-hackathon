@@ -32,7 +32,7 @@ async def root():
     return {
         "message": "AHA Backend is running",
         "version": "1.0.0",
-        "debug_mode": settings.debug_mode
+        "debug_mode": settings.aha_debug_mode
     }
 
 if __name__ == "__main__":
@@ -40,6 +40,6 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=settings.webhook_port,
-        reload=settings.debug_mode
+        port=settings.aha_webhook_port,
+        reload=settings.aha_debug_mode
     )

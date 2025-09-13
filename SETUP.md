@@ -1,4 +1,4 @@
-# AHA Setup Guide
+# AHA Setup Guide (Simplified)
 
 ## Quick Start
 
@@ -44,6 +44,19 @@ GITHUB_TOKEN=your_token_here
 GITHUB_REPO_OWNER=your_username
 GITHUB_REPO_NAME=aha-incidents
 ```
+
+## Zypher Target System (Optional)
+
+If you want to test the Zypher agents separately:
+
+```bash
+cd target_system
+./setup_zypher.sh
+# Set ANTHROPIC_API_KEY environment variable
+deno task dev
+```
+
+**Note**: The Zypher target system is simplified and doesn't require Firecrawl or external web crawling - it uses built-in knowledge only for reliable demo purposes.
 
 ## Demo Flow
 

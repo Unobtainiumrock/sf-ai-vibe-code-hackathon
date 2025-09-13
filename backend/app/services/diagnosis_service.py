@@ -4,7 +4,6 @@ Service for LLM-powered diagnosis of agent failures
 import logging
 from typing import Dict, Any
 import openai
-import anthropic
 
 from app.core.config import settings
 from app.models.incident import DiagnosisResult
@@ -41,13 +40,9 @@ class DiagnosisService:
     
     def __init__(self):
         self.openai_client = None
-        self.anthropic_client = None
         
         if settings.openai_api_key:
             self.openai_client = openai.AsyncOpenAI(api_key=settings.openai_api_key)
-        
-        if settings.anthropic_api_key:
-            self.anthropic_client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
     
     async def analyze_trace(self, trace_data: Dict[str, Any]) -> DiagnosisResult:
         """
@@ -60,12 +55,9 @@ class DiagnosisService:
             formatted_trace = self._format_trace_for_analysis(trace_data)
             prompt = DIAGNOSIS_PROMPT.format(trace_data=formatted_trace)
             
-            # Try OpenAI first, then Anthropic
-            response = None
+            # Use OpenAI for analysis
             if self.openai_client:
                 response = await self._analyze_with_openai(prompt)
-            elif self.anthropic_client:
-                response = await self._analyze_with_anthropic(prompt)
             else:
                 raise ValueError("No LLM provider configured")
             
@@ -95,16 +87,6 @@ class DiagnosisService:
             max_tokens=1000
         )
         return response.choices[0].message.content
-    
-    async def _analyze_with_anthropic(self, prompt: str) -> str:
-        """Analyze with Anthropic Claude"""
-        response = await self.anthropic_client.messages.create(
-            model="claude-3-opus-20240229",
-            max_tokens=1000,
-            temperature=0.1,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return response.content[0].text
     
     def _format_trace_for_analysis(self, trace_data: Dict[str, Any]) -> str:
         """Format trace data for LLM analysis"""

@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "🚀 Setting up Zypher Agent Target System..."
+echo "🚀 Setting up Zypher Agent Target System (Simplified)..."
 
 # Check if Deno is installed
 if ! command -v deno &> /dev/null; then
@@ -10,7 +10,7 @@ fi
 
 echo "✅ Deno found: $(deno --version | head -n1)"
 
-# Install dependencies
+# Install dependencies (no external MCP servers needed)
 echo "📦 Installing Zypher Agent dependencies..."
 deno add jsr:@corespeed/zypher
 deno add npm:rxjs-for-await
@@ -20,6 +20,7 @@ echo ""
 echo "To run the target system:"
 echo "  deno task dev"
 echo ""
-echo "Make sure you have these environment variables set:"
+echo "Make sure you have this environment variable set:"
 echo "  ANTHROPIC_API_KEY=your_key_here"
-echo "  FIRECRAWL_API_KEY=your_key_here"
+echo ""
+echo "Note: No Firecrawl API key needed - using built-in knowledge only!"
