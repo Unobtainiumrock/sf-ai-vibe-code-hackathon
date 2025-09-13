@@ -1,7 +1,7 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@corespeed/zypher@~0.2.1": "0.2.1",
+    "jsr:@corespeed/zypher@~0.2.2": "0.2.2",
     "jsr:@std/assert@^1.0.14": "1.0.14",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/fs@^1.0.19": "1.0.19",
@@ -23,8 +23,8 @@
     "npm:zod@^3.25.76": "3.25.76"
   },
   "jsr": {
-    "@corespeed/zypher@0.2.1": {
-      "integrity": "5d870fa700f15c5eb5cc06740b19873ff00466f0f0e09584cf058523f0b0e4d2",
+    "@corespeed/zypher@0.2.2": {
+      "integrity": "a4ae217bff0c2b27f31a558a43b776e3f8192114a3248fea7372299656dba229",
       "dependencies": [
         "jsr:@std/assert",
         "jsr:@std/encoding",
@@ -1624,7 +1624,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@corespeed/zypher@~0.2.1",
+      "jsr:@corespeed/zypher@~0.2.2",
       "npm:rxjs-for-await@1"
     ]
   }

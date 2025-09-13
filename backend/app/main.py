@@ -38,7 +38,7 @@ async def root():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        "main:app",
+        "app.main:app",
         host="0.0.0.0",
         port=settings.aha_webhook_port,
         reload=settings.aha_debug_mode

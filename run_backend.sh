@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "🚀 Starting AHA Backend..."
 cd backend
-python -m app.main
+poetry run python -m app.main

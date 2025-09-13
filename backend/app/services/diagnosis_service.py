@@ -3,7 +3,7 @@ Service for LLM-powered diagnosis of agent failures
 """
 import logging
 from typing import Dict, Any
-import openai
+import anthropic
 
 from app.core.config import settings
 from app.models.incident import DiagnosisResult
@@ -39,10 +39,10 @@ class DiagnosisService:
     """Service for analyzing traces with LLM"""
     
     def __init__(self):
-        self.openai_client = None
+        self.anthropic_client = None
         
-        if settings.openai_api_key:
-            self.openai_client = openai.AsyncOpenAI(api_key=settings.openai_api_key)
+        if settings.anthropic_api_key:
+            self.anthropic_client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
     
     async def analyze_trace(self, trace_data: Dict[str, Any]) -> DiagnosisResult:
         """
@@ -55,9 +55,9 @@ class DiagnosisService:
             formatted_trace = self._format_trace_for_analysis(trace_data)
             prompt = DIAGNOSIS_PROMPT.format(trace_data=formatted_trace)
             
-            # Use OpenAI for analysis
-            if self.openai_client:
-                response = await self._analyze_with_openai(prompt)
+            # Use Anthropic Claude for analysis
+            if self.anthropic_client:
+                response = await self._analyze_with_anthropic(prompt)
             else:
                 raise ValueError("No LLM provider configured")
             
@@ -78,15 +78,15 @@ class DiagnosisService:
                 root_cause=f"LLM analysis failed: {str(e)}"
             )
     
-    async def _analyze_with_openai(self, prompt: str) -> str:
-        """Analyze with OpenAI GPT-4"""
-        response = await self.openai_client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
+    async def _analyze_with_anthropic(self, prompt: str) -> str:
+        """Analyze with Anthropic Claude"""
+        response = await self.anthropic_client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            max_tokens=1000,
             temperature=0.1,
-            max_tokens=1000
+            messages=[{"role": "user", "content": prompt}]
         )
-        return response.choices[0].message.content
+        return response.content[0].text
     
     def _format_trace_for_analysis(self, trace_data: Dict[str, Any]) -> str:
         """Format trace data for LLM analysis"""
