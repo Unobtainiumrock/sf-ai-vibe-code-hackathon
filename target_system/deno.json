@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "dev": "deno run -A zypher_research_team.ts",
+    "demo": "deno run -A zypher_research_team.ts"
+  },
+  "imports": {
+    "@corespeed/zypher": "jsr:@corespeed/zypher",
+    "rxjs-for-await": "npm:rxjs-for-await"
+  }
+}
