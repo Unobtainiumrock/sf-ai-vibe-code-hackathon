@@ -4,7 +4,7 @@
     "demo": "deno run -A zypher_research_team.ts"
   },
   "imports": {
-    "@corespeed/zypher": "jsr:@corespeed/zypher",
-    "rxjs-for-await": "npm:rxjs-for-await"
+    "@corespeed/zypher": "jsr:@corespeed/zypher@^0.2.1",
+    "rxjs-for-await": "npm:rxjs-for-await@^1.0.0"
   }
 }
