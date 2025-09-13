@@ -30,7 +30,7 @@ class ZypherResearchTeam {
     try {
       const event$ = this.agent.runTask(
         query,
-        "claude-3-5-sonnet-20241022", // Use a stable Claude model
+        "claude-3-5-haiku-20241022", // Use current model
       );
 
       for await (const event of eachValueFrom(event$)) {

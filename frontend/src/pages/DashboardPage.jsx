@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { RefreshCw, Trash2, AlertTriangle, TrendingUp } from 'lucide-react'
 import IncidentCard from '../components/IncidentCard'
+import DemoNarrative from '../components/demo/DemoNarrative'
+import SystemStatus from '../components/system-status/SystemStatus'
+import DemoControls from '../components/demo/DemoControls'
 import { incidentAPI } from '../services/api'
 
 const DashboardPage = () => {
@@ -8,6 +11,8 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [currentDemoStep, setCurrentDemoStep] = useState(0)
+  const [isDemoRunning, setIsDemoRunning] = useState(false)
 
   const fetchIncidents = async () => {
     try {
@@ -38,6 +43,44 @@ const DashboardPage = () => {
         console.error('Error clearing incidents:', err)
       }
     }
+  }
+
+  const handleRunDemo = async (query) => {
+    setIsDemoRunning(true)
+    setCurrentDemoStep(0)
+    
+    // Simulate demo progression
+    const steps = [
+      'target-system',
+      'langsmith-tracing', 
+      'failure-detection',
+      'diagnosis',
+      'autonomous-action',
+      'dashboard'
+    ]
+    
+    for (let i = 0; i < steps.length; i++) {
+      setCurrentDemoStep(i)
+      await new Promise(resolve => setTimeout(resolve, 2000))
+    }
+    
+    // Refresh incidents after demo
+    await fetchIncidents()
+    setIsDemoRunning(false)
+  }
+
+  const handleRunTargetSystem = async (query) => {
+    setIsDemoRunning(true)
+    setCurrentDemoStep(0)
+    
+    // Simulate target system running
+    const steps = ['target-system', 'langsmith-tracing']
+    for (let i = 0; i < steps.length; i++) {
+      setCurrentDemoStep(i)
+      await new Promise(resolve => setTimeout(resolve, 1500))
+    }
+    
+    setIsDemoRunning(false)
   }
 
   useEffect(() => {
@@ -77,11 +120,11 @@ const DashboardPage = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              Incident Dashboard
+            <h1 className="text-3xl font-bold text-gray-900">
+              Autonomous AI Healing Agent (AHA)
             </h1>
             <p className="text-gray-600 mt-1">
-              Monitor and manage AI agent failures in real-time
+              Real-time monitoring and autonomous healing of AI agent systems
             </p>
           </div>
           <div className="flex space-x-3">
@@ -103,6 +146,22 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Demo Narrative */}
+      <DemoNarrative 
+        onStepChange={setCurrentDemoStep}
+        currentStep={currentDemoStep}
+      />
+
+      {/* Demo Controls */}
+      <DemoControls 
+        onRunDemo={handleRunDemo}
+        onRunTargetSystem={handleRunTargetSystem}
+        isRunning={isDemoRunning}
+      />
+
+      {/* System Status */}
+      <SystemStatus />
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">

@@ -26,7 +26,8 @@ def run_zypher_with_langsmith(query: str):
         "LANGCHAIN_TRACING_V2": "true",
         "LANGCHAIN_ENDPOINT": "https://api.smith.langchain.com",
         "LANGCHAIN_API_KEY": os.getenv("LANGSMITH_API_KEY"),
-        "LANGCHAIN_PROJECT": os.getenv("LANGSMITH_PROJECT", "aha-demo")
+        "LANGCHAIN_PROJECT": os.getenv("LANGSMITH_PROJECT", "aha-demo"),
+        "PATH": f"{os.path.expanduser('~')}/.deno/bin:{env.get('PATH', '')}"
     })
     
     print(f"🚀 Starting Zypher Research Team with LangSmith tracing...")
@@ -92,7 +93,7 @@ def main():
     else:
         query = " ".join(sys.argv[1:])
     
-    print("�� Zypher + LangSmith Integration Test")
+    print("🧪 Zypher + LangSmith Integration Test")
     print("=" * 50)
     
     # Check required environment variables
